@@ -1,0 +1,9 @@
+{
+  "name": "tiun_data",
+  "version": "1.0.0",
+  "description": "TIUN Puppeteer Script",
+  "author": "Yeliana Torres",
+  "dependencies": {
+    "puppeteer": "^1.9.0"
+  }
+}

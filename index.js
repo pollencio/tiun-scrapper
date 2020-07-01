@@ -6,43 +6,47 @@ const app = express()
 app.get('/', function (req, res) {
   const id = req.query.id
   getInfo(id)
-    .then(info => res.send(info))
-    .catch((error) => res.send('There was an error: ' + error))
+    .then(info => res.status(200).send(info))
+    .catch((error) =>  res.status(500).send('There was an error: ' + error))
 })
 
 // Run app!
-app.listen(3000, function () {
-  console.log('Listening on port 3000!')
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, function () {
+  console.log('Listening on port ' + PORT + '!')
   console.log('Start making a GET request to /?id=...');
 })
 
 // The beautiful scrapper
-const getInfo = async function(id) {
+function getInfo(id) {
   const url = 'http://tarjetainteligente.unal.edu.co/valide-aqui-datos-de-usuario/'
 
-  // Initialize
-  const browser = await puppeteer.launch()
-  const page = await browser.newPage()
+  return new Promise(async (resolve, reject) => {
+    try {
+      // Initialize
+      const browser = await puppeteer.launch({args: ['--no-sandbox']})
+      const page = await browser.newPage()
 
-  // Navigate
-  await page.goto(url, {waitUntil: 'networkidle2'})
+      // Navigate
+      await page.goto(url)
 
-  // Login
-  try {
-    await page.type('#identi', id)
-    await page.click('.send')
-    await page.screenshot({path: './screenshots/login.jpg'})
-    await page.waitForSelector('.VerTarUniNal')
-    return await page.evaluate(getDataFromPage)
-  }
+      // Login
+      await page.type('#identi', id)
+      await page.click('.send')
+      await page.waitForSelector('.VerTarUniNal')
+      const info = await page.evaluate(getDataFromPage)
 
-  catch (error) {
-    console.log('Error login', error)
-    await page.screenshot({path: './screenshots/error.jpg'})
-  }
+      // Close
+      browser.close()
 
-  // Close
-  await browser.close()
+      return resolve(info)
+    }
+
+    catch (error) {
+      console.log('Error login', error)
+      return reject(e)
+    }
+  })
 }
 
 // The function that gets all data from HTML like magic!
