@@ -1,0 +1,23 @@
+{
+  "name": "tiun-scrapper",
+  "version": "1.0.0",
+  "description": "A scrapper to get information of a tiun owner",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UNAL-Hospital-project/tiun-scrapper.git"
+  },
+  "author": "Yeliana Torres",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UNAL-Hospital-project/tiun-scrapper/issues"
+  },
+  "homepage": "https://github.com/UNAL-Hospital-project/tiun-scrapper#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "puppeteer": "^4.0.1"
+  }
+}
