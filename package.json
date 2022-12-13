@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/UNAL-Hospital-project/tiun-scrapper#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "puppeteer": "^4.0.1"
   }
 }
